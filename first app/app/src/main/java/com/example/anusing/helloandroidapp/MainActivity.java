@@ -1,8 +1,11 @@
 package com.example.anusing.helloandroidapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,5 +37,24 @@ public class MainActivity extends AppCompatActivity {
         // .quit
 
         setContentView(R.layout.activity_main);
+    }
+
+    public void launchMain(View view){
+        // create an intent for launching the main activity
+        Intent intent = new Intent(this,MainActivity.class);
+        //send the intent to android activity manager
+        startActivity(intent);
+    }
+
+    public void browseInternet(View view){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("http:www.google.com"));
+        startActivity(intent);
+    }
+    
+    public void callPhone(View view){
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:555-555-5555"));
+        startActivity(intent);
     }
 }
