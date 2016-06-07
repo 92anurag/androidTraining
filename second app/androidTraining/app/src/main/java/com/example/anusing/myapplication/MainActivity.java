@@ -1,5 +1,6 @@
 package com.example.anusing.myapplication;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     EditText userEditText;
+    public static String USER_TEXT_KEY="USER_TEXT_KEY";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +27,13 @@ public class MainActivity extends AppCompatActivity {
         String userText = userEditText.getText().toString();
         // popup at the bottom which delivers message and disaapears
         // toast requires activity context and not application context , because in application context there is no window
-        Toast.makeText(this, userText, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, userText, Toast.LENGTH_SHORT).show();
+
+        // launch a second acivity
+        Intent intent = new Intent(this,SecondActivity.class);
+        //attach extras on intent
+        intent.putExtra(MainActivity.USER_TEXT_KEY,userText);
+        startActivity(intent);
+
     }
 }
