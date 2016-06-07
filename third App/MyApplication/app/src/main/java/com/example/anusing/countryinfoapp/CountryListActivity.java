@@ -18,6 +18,10 @@ public class CountryListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_country_list);
         countryListTextView = (TextView) findViewById(R.id.textView);
+
+        if(savedInstanceState != null){
+            countryList = savedInstanceState.getStringArrayList("COUNTRY_LIST");
+        }
     }
 
     private String getStringFromArrayList(ArrayList<String> list){
@@ -52,6 +56,20 @@ public class CountryListActivity extends AppCompatActivity {
         }
     }
 
+    // we need to save state , so that we can switch between the view
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putStringArrayList("COUNTRY_LIST",countryList);
+    }
+
+    @Override
+    // here also we can reinitialize the countryListTextView
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -61,6 +79,6 @@ public class CountryListActivity extends AppCompatActivity {
 
     // activity goes into different modes 1. Active  2. Pause  3. Stop
     // when another activity start pervious is stopped (activity is not visible to the user .
-    // now this 2nd activity finishes 1st activity gets active and we have onStart , onResume methods
+    // now this 2nd activity finishes 1st activity gets active and we have onCreate , onStart , onResume methods
     // Pause happens when we have a dialog box
 }
