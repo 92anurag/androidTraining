@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string-array name="citiies">
+        <item>New Delhi</item>
+        <item>Noida</item>
+        <item>Bangalore</item>
+        <item>Chennai</item>
+        <item>Madras</item>
+    </string-array>
+</resources>
