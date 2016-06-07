@@ -8,6 +8,8 @@ import android.widget.EditText;
 
 public class AddCounrtyActivity extends AppCompatActivity {
 
+    // when we switch to landscape mode the activity on the top of the call stack will be destroyed and new will be created
+    // if back button button is pressed than current acitivity will
     EditText countryNameEditText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
