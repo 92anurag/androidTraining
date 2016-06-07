@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         // getResources gives acces of the resources
         cities = getResources().getStringArray(R.array.citiies);
         // to populate list views we need adapters
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,android.R.id.text1,cities);
+        adapter = new ArrayAdapter<String>(this, R.layout.row,R.id.textView,cities);
 
         //attach the adapter to a list view
         cityListView.setAdapter(adapter);
