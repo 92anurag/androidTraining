@@ -40,8 +40,13 @@ public class CityAdapter extends BaseAdapter
     public View getView(int position, View convertView, ViewGroup parent) {
         View mainView = null;
 
-        // inflate layout
-        mainView = LayoutInflater.from(context).inflate(R.layout.row,null);
+
+        if(convertView == null) {
+            // inflate layout
+            mainView = LayoutInflater.from(context).inflate(R.layout.row, null);
+        }else{
+            mainView = convertView;
+        }
         TextView tv = (TextView) mainView.findViewById(R.id.textView);
 
         String cityName = (String) getItem(position);
