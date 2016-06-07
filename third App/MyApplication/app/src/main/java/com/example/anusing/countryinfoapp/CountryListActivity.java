@@ -81,4 +81,7 @@ public class CountryListActivity extends AppCompatActivity {
     // when another activity start pervious is stopped (activity is not visible to the user .
     // now this 2nd activity finishes 1st activity gets active and we have onCreate , onStart , onResume methods
     // Pause happens when we have a dialog box
+
+
+    // for preserving live objects of an activity and data we have fragments and if we need to preserve only data we can use savedInstance state
 }
