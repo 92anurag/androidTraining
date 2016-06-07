@@ -60,7 +60,7 @@ public class CountryListActivity extends AppCompatActivity {
     }
 
     // activity goes into different modes 1. Active  2. Pause  3. Stop
-    // when another activity start pervious is stopped .
+    // when another activity start pervious is stopped (activity is not visible to the user .
     // now this 2nd activity finishes 1st activity gets active and we have onStart , onResume methods
     // Pause happens when we have a dialog box
 }
