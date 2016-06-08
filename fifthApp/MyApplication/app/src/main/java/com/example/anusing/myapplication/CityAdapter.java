@@ -16,6 +16,11 @@ public class CityAdapter extends BaseAdapter
     String[] cities;
     Context context;
 
+    // In Android create static handler class
+    static class ViewHolder {
+        TextView tv;
+    }
+
     public CityAdapter(String[] cities, Context context) {
         this.cities = cities;
         this.context = context;
@@ -44,13 +49,20 @@ public class CityAdapter extends BaseAdapter
         if(convertView == null) {
             // inflate layout
             mainView = LayoutInflater.from(context).inflate(R.layout.row, null);
+            ViewHolder vh =  new ViewHolder();
+            vh.tv = (TextView) mainView.findViewById(R.id.textView);
+
+            // attach the view holder to the view
+            mainView.setTag(vh);
         }else{
             mainView = convertView;
         }
-        TextView tv = (TextView) mainView.findViewById(R.id.textView);
+
+        ViewHolder viewHolder = (ViewHolder)mainView.getTag();
+        // world of list views - video during googleIO -2010
 
         String cityName = (String) getItem(position);
-        tv.setText(cityName);
+        viewHolder.tv.setText(cityName);
         return mainView;
     }
 }

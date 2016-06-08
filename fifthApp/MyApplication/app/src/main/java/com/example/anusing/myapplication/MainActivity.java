@@ -2,14 +2,13 @@ package com.example.anusing.myapplication;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
 
     ListView cityListView;
     String[] cities;
-    ArrayAdapter<String> adapter;
+    CityAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         // getResources gives acces of the resources
         cities = getResources().getStringArray(R.array.citiies);
         // to populate list views we need adapters
-        adapter = new ArrayAdapter<String>(this, R.layout.row,R.id.textView,cities);
+        adapter = new CityAdapter(cities,this);
 
         //attach the adapter to a list view
         cityListView.setAdapter(adapter);
