@@ -3,6 +3,8 @@ package com.example.anusing.imagedownloader;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -18,11 +20,27 @@ public class MainActivity extends AppCompatActivity {
 
     ImageView imageView;
 
+    // class which provides an interface which get attached to the message queue of the main thread
+
+    class ImageHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            Bundle bundle = msg.getData();
+            Bitmap image = bundle.getParcelable("IMAGE");
+            imageView.setImageBitmap(image);
+        }
+    }
+
+    ImageHandler imageHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         imageView = (ImageView) findViewById(R.id.imageView);
+
+        imageHandler =  new ImageHandler();
     }
 
     private Bitmap getImage(String url){
@@ -62,7 +80,20 @@ public class MainActivity extends AppCompatActivity {
                 if(image != null) {
                     Log.i("MainActivity ","Image Download Complete");
                     // cant update UI elements from background thread , we need to notify main thread to update this
-                    imageView.setImageBitmap(image);
+                    // to send a message to main thread create a handler, this will message in the message queue and the looper will than pick this in the message queue
+
+                    // get access to message object
+                    Message msg = Message.obtain();
+
+                    // create a bundle that contains image
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("IMAGE",image);
+
+                    // attach the bundle to message
+                    msg.setData(bundle);
+
+                    // send message to the handler
+                    imageHandler.sendMessage(msg);
                 }
             }
         };
