@@ -22,7 +22,11 @@ public class MainActivity extends AppCompatActivity {
 
     // class which provides an interface which get attached to the message queue of the main thread
 
-    class ImageHandler extends Handler {
+    static class ImageHandler extends Handler {
+        private ImageView imageView;
+        public ImageHandler(ImageView imgView){
+            this.imageView = imgView;
+        }
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -40,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         imageView = (ImageView) findViewById(R.id.imageView);
 
-        imageHandler =  new ImageHandler();
+        imageHandler =  new ImageHandler(imageView);
     }
 
     private Bitmap getImage(String url){
