@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -22,29 +21,31 @@ public class MainActivity extends AppCompatActivity {
 
     // class which provides an interface which get attached to the message queue of the main thread
 
-    static class ImageHandler extends Handler {
-        private ImageView imageView;
-        public ImageHandler(ImageView imgView){
-            this.imageView = imgView;
-        }
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+//    static class ImageHandler extends Handler {
+//        private ImageView imageView;
+//        public ImageHandler(ImageView imgView){
+//            this.imageView = imgView;
+//        }
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//
+//            Bundle bundle = msg.getData();
+//            Bitmap image = bundle.getParcelable("IMAGE");
+//            imageView.setImageBitmap(image);
+//        }
+//    }
 
-            Bundle bundle = msg.getData();
-            Bitmap image = bundle.getParcelable("IMAGE");
-            imageView.setImageBitmap(image);
-        }
-    }
 
-    ImageHandler imageHandler;
+    Handler imageHandler ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         imageView = (ImageView) findViewById(R.id.imageView);
 
-        imageHandler =  new ImageHandler(imageView);
+        imageHandler =  new Handler();
     }
 
     private Bitmap getImage(String url){
@@ -80,24 +81,31 @@ public class MainActivity extends AppCompatActivity {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                Bitmap image = getImage("http://pre13.deviantart.net/ba29/th/pre/i/2016/070/a/f/android_n_logo_by_stayka007-d9untw2.png");
+                final Bitmap image = getImage("http://pre13.deviantart.net/ba29/th/pre/i/2016/070/a/f/android_n_logo_by_stayka007-d9untw2.png");
                 if(image != null) {
-                    Log.i("MainActivity ","Image Download Complete");
-                    // cant update UI elements from background thread , we need to notify main thread to update this
-                    // to send a message to main thread create a handler, this will message in the message queue and the looper will than pick this in the message queue
-
-                    // get access to message object
-                    Message msg = Message.obtain();
-
-                    // create a bundle that contains image
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable("IMAGE",image);
-
-                    // attach the bundle to message
-                    msg.setData(bundle);
-
-                    // send message to the handler
-                    imageHandler.sendMessage(msg);
+                    Runnable r = new Runnable() {
+                        @Override
+                        public void run() {
+                            imageView.setImageBitmap(image);
+                        }
+                    };
+                    imageHandler.post(r);
+//                    Log.i("MainActivity ","Image Download Complete");
+//                    // cant update UI elements from background thread , we need to notify main thread to update this
+//                    // to send a message to main thread create a handler, this will message in the message queue and the looper will than pick this in the message queue
+//
+//                    // get access to message object
+//                    Message msg = Message.obtain();
+//
+//                    // create a bundle that contains image
+//                    Bundle bundle = new Bundle();
+//                    bundle.putParcelable("IMAGE",image);
+//
+//                    // attach the bundle to message
+//                    msg.setData(bundle);
+//
+//                    // send message to the handler
+//                    imageHandler.sendMessage(msg);
                 }
             }
         };
