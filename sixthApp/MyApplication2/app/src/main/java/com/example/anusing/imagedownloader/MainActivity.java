@@ -53,7 +53,20 @@ public class MainActivity extends AppCompatActivity {
 //            e.printStackTrace();;
 //        }
 
-        Bitmap image = getImage("http://pre13.deviantart.net/ba29/th/pre/i/2016/070/a/f/android_n_logo_by_stayka007-d9untw2.png");
-        imageView.setImageBitmap(image);
+
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                Bitmap image = getImage("http://pre13.deviantart.net/ba29/th/pre/i/2016/070/a/f/android_n_logo_by_stayka007-d9untw2.png");
+                if(image != null) {
+                    Log.i("MainActivity ","Image Download Complete");
+                    // cant update UI elements from background thread , we need to notify main thread to update this
+                    imageView.setImageBitmap(image);
+                }
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
     }
 }
